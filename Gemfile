@@ -41,9 +41,12 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'grape_on_rails_routes'
+  gem 'grape_logging'
 end
 
 gem 'mongoid', '5.4.0'
 gem 'mongoid-enum'
+gem 'mongoid_paranoia'
 gem 'grape'
 gem 'grape-rabl'

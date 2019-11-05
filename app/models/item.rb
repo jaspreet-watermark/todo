@@ -1,6 +1,7 @@
 class Item
   include Mongoid::Document
   include Mongoid::Enum
+  include Mongoid::Paranoia
   include Mongoid::Timestamps
 
   # Defining our fields with their types
@@ -15,4 +16,12 @@ class Item
   # Validations
   validates :title, presence: true
   validates :status, presence: true
+
+  # class methods
+  class << self
+    def statuses
+      STATUS.map(&:to_s)
+    end
+  end
 end
+
