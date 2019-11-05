@@ -43,3 +43,6 @@ group :development do
   gem 'spring'
 end
 
+gem 'mongoid', '5.4.0'
+gem 'mongoid-enum'
+
