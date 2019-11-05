@@ -45,4 +45,5 @@ end
 
 gem 'mongoid', '5.4.0'
 gem 'mongoid-enum'
-
+gem 'grape'
+gem 'grape-rabl'
