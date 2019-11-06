@@ -10,9 +10,8 @@ module API::V1
         optional :page,  type: Integer, default: 1, desc: "Specify the page of paginated results."
       end
       get rabl: 'items/items' do
-        @items = Item.all
+        @items = Item.page(params[:page]).per(params[:limit])
         @items = @items.where("tags.slug" => params[:tag].parameterize) if params[:tag]
-        @items.page(params[:page]).per(params[:limit])
       end
 
       # POST /api/v1/items
