@@ -88,6 +88,10 @@ GEM
       i18n
       rabl
       tilt
+    grape-swagger (0.27.3)
+      grape (>= 0.16.2)
+    grape-swagger-rails (0.3.1)
+      railties (>= 3.2.12)
     grape_logging (1.8.3)
       grape
       rack
@@ -260,6 +264,8 @@ DEPENDENCIES
   faker
   grape
   grape-rabl
+  grape-swagger
+  grape-swagger-rails
   grape_logging
   grape_on_rails_routes
   jbuilder (~> 2.0)

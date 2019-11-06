@@ -23,6 +23,11 @@ module API::V1
 
     mount HealthCheck
     mount Items
+    add_swagger_documentation base_path: '/api/v1/',
+                              info: {
+                                  title: 'Todo',
+                                  description: 'RESTful API for CRUD'
+                              }
   end
 end
 
