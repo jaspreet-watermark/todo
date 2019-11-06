@@ -49,5 +49,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'faker'
+  gem 'simplecov'
 end
 

@@ -14,5 +14,6 @@
 
 log
 tmp
+coverage
 # Ignore RubyMine files
 .idea

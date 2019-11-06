@@ -46,7 +46,7 @@ describe API::V1::Items do
       it 'returns error for #missing title' do
         post '/api/v1/items', attr
         expect(parsed_json['error']).to eq('title is missing')
-        expect(response.status).to eq(201)
+        expect(response.status).to eq(400)
       end
     end
   end
