@@ -1,17 +1,18 @@
-module V1
-  class Item < Grape::API
+module API::V1
+  class Items < Grape::API
 
     resources :items do
       # GET /api/v1/items
-      desc 'Returns all items'
+      desc 'Returns all items, result is paginated'
       params do
         optional :tag, type: String, desc: 'Tags'
-        optional :limit, type: Integer, default: 2, desc: "Limit the number of returned orders, default to 100."
+        optional :limit, type: Integer, default: 10, desc: "Limit the number of returned orders, default to 10."
         optional :page,  type: Integer, default: 1, desc: "Specify the page of paginated results."
       end
       get rabl: 'items/items' do
-        @items = ::Item.all
-        @items = @items.where("tags.name" => params[:tag]) if params[:tag]
+        @items = Item.all
+        @items = @items.where("tags.slug" => params[:tag].parameterize) if params[:tag]
+        @items.page(params[:page]).per(params[:limit])
       end
 
       # POST /api/v1/items
@@ -19,14 +20,14 @@ module V1
       params do
         requires :title, type: String, desc: 'Item Title'
         optional :description, type: String, desc: 'Item Description'
-        optional :status, type: String, values: ::Item.statuses, desc: 'Item Description'
+        optional :status, type: String, values: Item.statuses, desc: 'Item Description'
         optional :tags, type: Array, desc: 'Item Tags' do
           requires :name, type: String, desc: 'Tag Name'
         end
       end
       post do
-       @item = ::Item.create(params)
-        if @item.valid?
+       @item = Item.create(params)
+        if @item.persisted?
           render rabl: 'items/item'
           status :created
         else
@@ -41,13 +42,13 @@ module V1
         requires :id, type: String, desc: 'Item Id'
         optional :title, type: String, desc: 'Item Title'
         optional :description, type: String, desc: 'Item Description'
-        optional :status, type: String, values: ::Item.statuses, desc: 'Item Description'
+        optional :status, type: String, values: Item.statuses, desc: 'Item Description'
         optional :tags, type: Array, desc: 'Item Tags' do
           requires :name, type: String, desc: 'Tag Name'
         end
       end
       put ':id' do
-        @item = ::Item.find(params[:id])
+        @item = Item.find(params[:id])
         if @item.update(params)
           render rabl: 'items/item'
           status :ok
@@ -63,7 +64,7 @@ module V1
         requires :id, type: String, desc: 'Item Id'
       end
       delete ':id', rabl: 'items/item' do
-        @item = ::Item.find(params[:id])
+        @item = Item.find(params[:id])
         @item.destroy
         status :ok
       end
@@ -74,7 +75,7 @@ module V1
         requires :id, type: String, desc: 'Item Id'
       end
       put ':id/restore', rabl: 'items/item' do
-        @item = ::Item.unscoped.find(params[:id])
+        @item = Item.unscoped.find(params[:id])
         @item.restore
         status :ok
       end
@@ -85,7 +86,7 @@ module V1
         requires :name, type: String, desc: 'Tag Name'
       end
       post ':id/tag', rabl: 'items/item' do
-        @item = ::Item.find(params[:id])
+        @item = Item.find(params[:id])
 
         tag = @item.tags.find_by(slug: params[:name].parameterize) rescue nil
         if tag

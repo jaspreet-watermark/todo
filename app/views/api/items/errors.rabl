@@ -1,4 +1,4 @@
 collection @item, object_root: false
-node :errors do |o|
+node :error do |o|
   o.errors.full_messages
 end

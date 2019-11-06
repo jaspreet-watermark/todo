@@ -1,7 +1,6 @@
-module V1
+module API::V1
   class Mount < Grape::API
-    PREFIX = '/api'
-    version 'v1', using: :path
+
     cascade false
 
     format :json
@@ -10,7 +9,6 @@ module V1
 
     # rescue Exceptions
     rescue_from Mongoid::Errors::DocumentNotFound do |e|
-      puts "excepton = #{e.message}"
       error_response(message: 'Record Not Found!', status: 404)
     end
 
@@ -24,7 +22,7 @@ module V1
     do_not_route_options!
 
     mount HealthCheck
-    mount Item
+    mount Items
   end
 end
 

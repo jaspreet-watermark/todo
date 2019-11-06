@@ -1,4 +1,4 @@
-module V1
+module API::V1
   class HealthCheck < Grape::API
 
     desc 'API heath check status'
