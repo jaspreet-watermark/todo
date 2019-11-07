@@ -9,7 +9,7 @@ module API::V1
 
     # rescue Exceptions
     rescue_from Mongoid::Errors::DocumentNotFound do |e|
-      error_response(message: 'Record Not Found!', status: 404)
+      error! 'Record Not Found!', 404
     end
 
     # logger
@@ -28,6 +28,11 @@ module API::V1
                                   title: 'Todo',
                                   description: 'RESTful API for CRUD'
                               }
+
+    # undefined route error
+    route :any, '*path' do
+      error! 'Route is not found', 404
+    end
   end
 end
 

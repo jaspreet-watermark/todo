@@ -5,7 +5,7 @@ module API::V1
       # GET /api/v1/items
       desc 'Returns all items, result is paginated'
       params do
-        optional :tag, type: String, desc: 'Tags'
+        optional :tag, type: String, desc: 'Search by Tag'
         optional :limit, type: Integer, default: 10, desc: "Limit the number of returned orders, default to 10."
         optional :page,  type: Integer, default: 1, desc: "Specify the page of paginated results."
       end
@@ -19,7 +19,7 @@ module API::V1
       params do
         requires :title, type: String, desc: 'Item Title'
         optional :description, type: String, desc: 'Item Description'
-        optional :status, type: String, values: Item.statuses, desc: 'Item Description'
+        optional :status, type: String, values: Item.statuses, desc: 'Item Status'
         optional :tags, type: Array, desc: 'Item Tags' do
           requires :name, type: String, desc: 'Tag Name'
         end
