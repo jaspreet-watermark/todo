@@ -1,6 +1,14 @@
 module API::V1
   class Items < Grape::API
 
+    # helpers
+    helpers ::API::V1::NamedParams
+    helpers do
+      def item_params(params)
+        declared(params, include_missing: false)
+      end
+    end
+
     resources :items do
       # GET /api/v1/items
       desc 'Returns all items, result is paginated'
@@ -18,14 +26,10 @@ module API::V1
       desc 'Creates an item'
       params do
         requires :title, type: String, desc: 'Item Title'
-        optional :description, type: String, desc: 'Item Description'
-        optional :status, type: String, values: Item.statuses, desc: 'Item Status'
-        optional :tags, type: Array, desc: 'Item Tags' do
-          requires :name, type: String, desc: 'Tag Name'
-        end
+        use :item
       end
       post do
-       @item = Item.create(params)
+       @item = Item.create(item_params(params))
         if @item.persisted?
           render rabl: 'items/item'
           status :created
@@ -38,17 +42,12 @@ module API::V1
       # PUT /api/v1/items/:id
       desc 'Updates an item'
       params do
-        requires :id, type: String, desc: 'Item Id'
         optional :title, type: String, desc: 'Item Title'
-        optional :description, type: String, desc: 'Item Description'
-        optional :status, type: String, values: Item.statuses, desc: 'Item Description'
-        optional :tags, type: Array, desc: 'Item Tags' do
-          requires :name, type: String, desc: 'Tag Name'
-        end
+        use :item
       end
       put ':id' do
         @item = Item.find(params[:id])
-        if @item.update(params)
+        if @item.update(item_params(params))
           render rabl: 'items/item'
           status :ok
         else
