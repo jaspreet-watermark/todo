@@ -13,11 +13,11 @@ module API::V1
     end
 
     # logger
-    if Rails.env.development?
-      require 'grape_logging'
-      logger.formatter = GrapeLogging::Formatters::Rails.new
-      use GrapeLogging::Middleware::RequestLogger, { logger: logger }
-    end
+    # if Rails.env.development?
+    require 'grape_logging'
+    logger.formatter = GrapeLogging::Formatters::Rails.new
+    use GrapeLogging::Middleware::RequestLogger, { logger: logger }
+    # end
 
     do_not_route_options!
 

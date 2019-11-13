@@ -31,6 +31,7 @@ gem 'kaminari-mongoid'
 gem 'grape-swagger'
 gem 'grape-swagger-rails'
 gem 'rack-cors'
+gem 'grape_logging'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -45,7 +46,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'grape_on_rails_routes'
-  gem 'grape_logging'
 end
 
 group :test do
