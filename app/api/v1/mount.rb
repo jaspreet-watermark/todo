@@ -27,7 +27,8 @@ module API::V1
                               info: {
                                   title: 'Todo',
                                   description: 'RESTful API for CRUD'
-                              }
+                              },
+                              array_use_braces: true
 
     # undefined route error
     route :any, '*path' do

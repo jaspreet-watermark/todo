@@ -11,8 +11,8 @@ module API
         optional :due_at, type: String, desc: 'Item Due At DateTime'
         optional :started_at, type: String, desc: 'Item started At DateTime'
         optional :completed_at, type: String, desc: 'Item Completed At DateTime'
-        optional :tags, type: Array, desc: 'Item Tags' do
-          requires :name, type: String, desc: 'Tag Name'
+        group :tags, type: Array[JSON], desc: 'Item Tags' do
+          optional :name, type: String, desc: 'Tag Name'
         end
       end
     end
