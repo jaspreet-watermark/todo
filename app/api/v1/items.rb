@@ -39,6 +39,13 @@ module API::V1
         end
       end
 
+      # GET /api/v1/items/:id
+      desc 'Fetch an item'
+      get ':id', rabl: 'items/item' do
+        @item = Item.find(params[:id])
+        status :ok
+      end
+
       # PUT /api/v1/items/:id
       desc 'Updates an item'
       params do
